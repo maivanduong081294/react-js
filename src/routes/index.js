@@ -1,16 +1,37 @@
-import { AdminLayout } from "~/layouts";
-
-import { AdminDashboard } from "~/pages/Admin/Dashboard";
 import config from "~/config";
+import { NoSidebarLayout } from "~/layouts";
+import Homepage from "~/pages/Home";
+import AdminDashboard from "~/pages/Admin/Dashboard";
+import Page404 from "~/pages/Page404";
 
 const publicRoutes = [
     {
-        path: config.routes.admin,
+        path: "*",
+        component: Page404,
+        layout: NoSidebarLayout,
+    },
+    {
+        path: config.routes.home,
+        component: Homepage,
+    },
+    {
+        path: config.routes.login,
         component: AdminDashboard,
-        layout: AdminLayout,
     },
 ];
 
 const privateRoutes = [];
 
-export { publicRoutes, privateRoutes };
+const adminRoutes = [
+    {
+        path: config.routes.admin,
+        component: AdminDashboard,
+    },
+    {
+        path: `${config.routes.admin}/*`,
+        component: Page404,
+        layout: NoSidebarLayout,
+    },
+];
+
+export { publicRoutes, privateRoutes, adminRoutes };

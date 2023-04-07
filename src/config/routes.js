@@ -1,3 +1,5 @@
+const adminUrl = process.env.REACT_APP_ADMIN_URL || "/admin";
+
 const routes = {
     home: "/",
     following: "/following",
@@ -5,7 +7,8 @@ const routes = {
     upload: "/upload",
     search: "/search",
     message: "/message",
-    admin: "/admin",
+    login: "/login",
+    admin: adminUrl,
 };
 
 export default routes;

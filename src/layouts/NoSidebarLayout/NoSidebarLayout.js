@@ -1,19 +1,17 @@
 import React from "react";
 import classNames from "classnames/bind";
 import { Header } from "~/layouts/admin/components";
-import Sidebar from "./Sidebar";
-import styles from "./DefaultLayout.module.scss";
+import styles from "./NoSidebarLayout.module.scss";
 
 const cx = classNames.bind(styles);
 
-function DefaultLayout({ children }) {
+function NoSidebarLayout({ children }) {
     return (
         <React.Fragment>
             <div id="main">
                 <Header></Header>
                 <main className={cx("wrapper")}>
                     <div className={cx("container")}>
-                        <Sidebar></Sidebar>
                         <div className={cx("content")}>{children}</div>
                     </div>
                 </main>
@@ -22,4 +20,4 @@ function DefaultLayout({ children }) {
     );
 }
 
-export default DefaultLayout;
+export default NoSidebarLayout;

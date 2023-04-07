@@ -1,6 +1,7 @@
 import config from "~/config";
 import { NoSidebarLayout } from "~/layouts";
 import Homepage from "~/pages/Home";
+import Login from "~/pages/Login";
 import AdminDashboard from "~/pages/Admin/Dashboard";
 import Page404 from "~/pages/Page404";
 
@@ -16,7 +17,8 @@ const publicRoutes = [
     },
     {
         path: config.routes.login,
-        component: AdminDashboard,
+        component: Login,
+        layout: null,
     },
 ];
 

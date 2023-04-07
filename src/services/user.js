@@ -1,20 +1,9 @@
-import { get, post } from "~/utilss/httpRequest";
+import { get, post } from "~/utils/httpRequest";
 
-export const userService = {
-    login,
-    logout,
-    register,
-    getAll,
-    getById,
-    update,
-    delete: _delete,
-};
-
-function login(username, password) {
+const login = async (username, password) => {
     try {
-        const res = get("user/authenticate", { username, password });
-
-        return res.data;
+        const res = await post("users/authentication", { username, password });
+        return res;
     } catch (error) {
         console.log(error);
     }
@@ -32,7 +21,7 @@ function login(username, password) {
 
     //         return user;
     //     });
-}
+};
 
 function logout() {
     // remove user from local storage to log user out
@@ -91,7 +80,7 @@ function handleResponse(response) {
             if (response.status === 401) {
                 // auto logout if 401 response returned from api
                 logout();
-                location.reload(true);
+                window.location.reload(true);
             }
 
             const error = (data && data.message) || response.statusText;
@@ -101,3 +90,13 @@ function handleResponse(response) {
         return data;
     });
 }
+
+export const userService = {
+    login,
+    logout,
+    register,
+    getAll,
+    getById,
+    update,
+    delete: _delete,
+};

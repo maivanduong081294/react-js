@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { adminRoutes, publicRoutes } from "~/routes";
 import { DefaultLayout, AdminLayout } from "~/layouts";
@@ -10,7 +11,7 @@ function App() {
                 {publicRoutes.map((route) => {
                     let Layout = DefaultLayout;
                     if (route.layout === null) {
-                        Layout = "";
+                        Layout = Fragment;
                     } else if (route.layout !== undefined) {
                         Layout = route.layout;
                     }

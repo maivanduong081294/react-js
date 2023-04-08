@@ -1,0 +1,27 @@
+.wrapper {
+    position: relative;
+    overflow-x: auto;
+}
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    padding: 24px 12px;
+}
+.content {
+    border-radius: 15px;
+    overflow: hidden;
+}
+.header {
+    background: var(--bg-primary);
+}
+.logo {
+    padding: 15px;
+    display: inline-flex;
+    img {
+        max-height: 50px;
+        width: 100%;
+        object-fit: contain;
+    }
+}

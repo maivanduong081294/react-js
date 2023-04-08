@@ -1,11 +1,11 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import config from "~/config";
+import { isLogin } from "~/hooks";
 
 function AdminRoute() {
-    const auth = useSelector((state) => state.auth);
     const location = useLocation();
-    return auth.loggedIn > 0 ? (
+    return isLogin() ? (
         <Outlet />
     ) : (
         <Navigate to={config.routes.login} state={{ redirectTo: location }} />

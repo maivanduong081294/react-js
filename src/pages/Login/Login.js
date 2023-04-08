@@ -1,35 +1,57 @@
-import { useState } from "react";
-import { useNavigate, useLocation, Link, redirect } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { memo, useEffect, useState } from "react";
+import { useNavigate, useLocation, Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import md5 from "md5";
 import classNames from "classnames/bind";
 import styles from "./Login.module.scss";
 import { userActions } from "~/actions";
+import config from "~/config";
+import { isLogin } from "~/hooks";
+import { Input } from "~/components/Form";
 
 const cx = classNames.bind(styles);
 
 function Login(props) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const auth = useSelector((state) => state.auth);
+    const [resetLogin, setResetLogin] = useState(0);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { state: locationState } = useLocation();
 
-    const handleLogin = (username, password) => {
+    useEffect(() => {
+        if (isLogin() && resetLogin === 0) {
+            setResetLogin(1);
+            dispatch(userActions.logout());
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    const handleLogin = async (username, password) => {
         password = md5(password);
-        let redirect = "";
+        const loggingIn = await dispatch(userActions.login(username, password));
+        let redirect = config.routes.admin;
         if (locationState) {
             let { redirectTo } = locationState;
             redirect = `${redirectTo.pathname}${redirectTo.search}`;
         }
-        dispatch(userActions.login(username, password, redirect));
+        if (loggingIn === 1) {
+            navigate(redirect);
+        }
     };
+
     return (
-        <div>
-            <input
+        <div className={cx("wrapper")}>
+            <Input
+                validate="true"
+                type="number"
+                label="Username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
+                minLength="3"
+                maxLength="8"
+                min="3.5"
+                required
             />
             <input
                 type="password"
@@ -44,4 +66,4 @@ function Login(props) {
     );
 }
 
-export default Login;
+export default memo(Login);

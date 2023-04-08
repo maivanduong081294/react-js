@@ -1,14 +1,14 @@
 import config from "~/config";
-import { NoSidebarLayout } from "~/layouts";
+import { NoSidebarLayout, SimpleCenterLayout } from "~/layouts";
 import Homepage from "~/pages/Home";
 import Login from "~/pages/Login";
 import AdminDashboard from "~/pages/Admin/Dashboard";
-import Page404 from "~/pages/Page404";
+import NotFound from "~/pages/NotFound";
 
 const publicRoutes = [
     {
         path: "*",
-        component: Page404,
+        component: NotFound,
         layout: NoSidebarLayout,
     },
     {
@@ -18,7 +18,7 @@ const publicRoutes = [
     {
         path: config.routes.login,
         component: Login,
-        layout: null,
+        layout: SimpleCenterLayout,
     },
 ];
 
@@ -31,7 +31,7 @@ const adminRoutes = [
     },
     {
         path: `${config.routes.admin}/*`,
-        component: Page404,
+        component: NotFound,
         layout: NoSidebarLayout,
     },
 ];

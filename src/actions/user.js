@@ -1,7 +1,6 @@
 import { userConstants } from "~/constants";
 import { userService } from "~/services";
 import { alertActions } from "./";
-import { history } from "~/helpers";
 
 export const userActions = {
     login,
@@ -11,7 +10,7 @@ export const userActions = {
     delete: _delete,
 };
 
-function login(username, password, redirectTo) {
+function login(username, password) {
     return (dispatch) => {
         dispatch(request({ username }));
 
@@ -19,13 +18,13 @@ function login(username, password, redirectTo) {
             const result = await userService.login(username, password);
             if (result.status === 1) {
                 dispatch(success(result.data));
-                history.push(redirectTo);
             } else {
                 dispatch(failure(result.message));
                 dispatch(alertActions.error(result.message));
             }
+            return result.status;
         };
-        fetchAPI(username, password);
+        return fetchAPI(username, password);
     };
 
     function request(user) {
@@ -51,7 +50,6 @@ function register(user) {
         userService.register(user).then(
             (user) => {
                 dispatch(success());
-                history.push("/login");
                 dispatch(alertActions.success("Registration successful"));
             },
             (error) => {

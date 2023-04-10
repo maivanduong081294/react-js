@@ -7,7 +7,9 @@ const routes = {
     upload: "/upload",
     search: "/search",
     message: "/message",
-    login: "/login",
+    login: "/dang-nhap",
+    register: "/dang-ky",
+    forgotPassword: "/quen-mat-khau",
     admin: adminUrl,
 };
 

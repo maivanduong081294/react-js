@@ -2,6 +2,7 @@ import config from "~/config";
 import { NoSidebarLayout, SimpleCenterLayout } from "~/layouts";
 import Homepage from "~/pages/Home";
 import Login from "~/pages/Login";
+import Register from "~/pages/Register";
 import AdminDashboard from "~/pages/Admin/Dashboard";
 import NotFound from "~/pages/NotFound";
 
@@ -18,6 +19,11 @@ const publicRoutes = [
     {
         path: config.routes.login,
         component: Login,
+        layout: SimpleCenterLayout,
+    },
+    {
+        path: config.routes.register,
+        component: Register,
         layout: SimpleCenterLayout,
     },
 ];

@@ -1,3 +1,4 @@
+export * from "./useValidates";
 export * from "./useUser";
-export * from "./useForm";
 export * from "./useDebounce";
+export * from "./useDocumentTitle";

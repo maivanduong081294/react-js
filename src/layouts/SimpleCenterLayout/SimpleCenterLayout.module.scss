@@ -1,3 +1,6 @@
+:root {
+    --layout-border-radius: 15px;
+}
 .wrapper {
     position: relative;
     overflow-x: auto;
@@ -10,11 +13,12 @@
     padding: 24px 12px;
 }
 .content {
-    border-radius: 15px;
     overflow: hidden;
 }
 .header {
     background: var(--bg-primary);
+    border-top-right-radius: var(--layout-border-radius);
+    border-top-left-radius: var(--layout-border-radius);
 }
 .logo {
     padding: 15px;
@@ -24,4 +28,11 @@
         width: 100%;
         object-fit: contain;
     }
+}
+.main {
+    border: 1px solid #ccc;
+    border-top: 0;
+    border-bottom-right-radius: var(--layout-border-radius);
+    border-bottom-left-radius: var(--layout-border-radius);
+    padding: 20px 15px 15px 15px;
 }

@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faLock } from "@fortawesome/free-solid-svg-icons";
 
 import classNames from "classnames/bind";
-import styles from "./Login.module.scss";
+import styles from "./Register.module.scss";
 
 import { userActions } from "~/actions";
 import config from "~/config";
@@ -70,22 +70,17 @@ function Login(props) {
                             errors={errors}
                             touched={touched}
                         />
-                        <div className={cx("footer")}>
-                            <FormInput
-                                className="text-left"
-                                name="remember"
-                                type="checkbox"
-                                values={values}
-                                errors={errors}
-                                touched={touched}
-                                value="1"
-                            >
-                                Tự động đăng nhập
-                            </FormInput>
-                            <Link to={config.routes.forgotPassword}>
-                                Quên mật khẩu?
-                            </Link>
-                        </div>
+                        <FormInput
+                            className="text-left"
+                            name="remember"
+                            type="checkbox"
+                            values={values}
+                            errors={errors}
+                            touched={touched}
+                            value="1"
+                        >
+                            Tự động đăng nhập
+                        </FormInput>
                         <FormSubmit label="Đăng nhập" />
                         <FormikErrorFocus
                             offset={0}

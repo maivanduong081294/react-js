@@ -2,7 +2,6 @@ import { forwardRef } from "react";
 import { Link } from "react-router-dom";
 import classNames from "classnames/bind";
 import styles from "./Button.module.scss";
-import { useTheme } from "~/Theme";
 
 const cx = classNames.bind(styles);
 
@@ -35,8 +34,6 @@ function Button(
     },
     ref
 ) {
-    const [stateTheme] = useTheme();
-    const theme = stateTheme.theme;
     let Tag = "button";
     const classes = cx(
         {
@@ -55,8 +52,7 @@ function Button(
             wAuto,
             separator,
         },
-        className,
-        theme
+        className
     );
     if (icon) {
         // classes.btn = false;

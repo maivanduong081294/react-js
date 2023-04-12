@@ -11,7 +11,7 @@ import styles from "./Login.module.scss";
 
 import { userActions } from "~/actions";
 import config from "~/config";
-import { isLogin, useDocumentTitle, useLoginSchema } from "~/hooks";
+import { useUser, useLoginSchema, useMeta } from "~/hooks";
 import { FormInput, FormSubmit } from "~/components/Form";
 import Title from "~/components/Title";
 
@@ -22,26 +22,34 @@ function Login(props) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { state: locationState } = useLocation();
-
-    useDocumentTitle("Login Page");
-
+    const { username, password } = useUser.getRememberMe();
     useEffect(() => {
-        if (isLogin() && resetLogin === 0) {
+        if (useUser.isLogin() && resetLogin === 0) {
             setResetLogin(1);
             dispatch(userActions.logout());
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    useMeta.useSetMeta({ title: "Đăng nhập" });
+
     return (
         <div className={cx("wrapper")}>
             <Title Comp="h2" title="Đăng nhập" />
             <Formik
-                initialValues={{ username: "", password: "", remember: "" }}
+                initialValues={{
+                    username: username,
+                    password: password,
+                    remember: username ? "1" : "0",
+                }}
                 validationSchema={useLoginSchema}
                 onSubmit={async (values) => {
                     const loggingIn = await dispatch(
-                        userActions.login(values.username, values.password)
+                        userActions.login(
+                            values.username,
+                            values.password,
+                            values.remember
+                        )
                     );
                     let redirect = config.routes.admin;
                     if (locationState) {
@@ -61,12 +69,14 @@ function Login(props) {
                             placeholder="Tên đăng nhập"
                             errors={errors}
                             touched={touched}
+                            value={values.username}
                         />
                         <FormInput
                             iconLeft={<FontAwesomeIcon icon={faLock} />}
                             name="password"
                             type="password"
                             placeholder="Mật khẩu"
+                            value={values.password}
                             errors={errors}
                             touched={touched}
                         />
@@ -80,7 +90,7 @@ function Login(props) {
                                 touched={touched}
                                 value="1"
                             >
-                                Tự động đăng nhập
+                                Ghi nhớ mật khẩu
                             </FormInput>
                             <Link to={config.routes.forgotPassword}>
                                 Quên mật khẩu?

@@ -1,9 +1,20 @@
-import { Link } from "react-router-dom";
+import { userActions } from "~/actions";
+import { useNavigate } from "react-router-dom";
+import config from "~/config";
 
 function AdminDashboard() {
+    const navigate = useNavigate();
     return (
         <div>
-            admin <Link to="/login">Login</Link>
+            admin{" "}
+            <button
+                onClick={() => {
+                    userActions.logout();
+                    navigate(config.routes.login);
+                }}
+            >
+                Logout
+            </button>
         </div>
     );
 }

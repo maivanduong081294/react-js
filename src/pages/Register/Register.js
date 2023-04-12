@@ -1,17 +1,17 @@
 import { memo, useEffect, useState } from "react";
-import { useNavigate, useLocation, Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { Form, Formik } from "formik";
 import FormikErrorFocus from "formik-error-focus";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser, faLock } from "@fortawesome/free-solid-svg-icons";
+import { faUser, faLock, faEnvelope } from "@fortawesome/free-solid-svg-icons";
 
 import classNames from "classnames/bind";
 import styles from "./Register.module.scss";
 
 import { userActions } from "~/actions";
 import config from "~/config";
-import { isLogin, useDocumentTitle, useLoginSchema } from "~/hooks";
+import { useUser, useRegisterSchema } from "~/hooks";
 import { FormInput, FormSubmit } from "~/components/Form";
 import Title from "~/components/Title";
 
@@ -21,12 +21,9 @@ function Login(props) {
     const [resetLogin, setResetLogin] = useState(0);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { state: locationState } = useLocation();
-
-    useDocumentTitle("Login Page");
 
     useEffect(() => {
-        if (isLogin() && resetLogin === 0) {
+        if (useUser.isLogin() && resetLogin === 0) {
             setResetLogin(1);
             dispatch(userActions.logout());
         }
@@ -35,26 +32,32 @@ function Login(props) {
 
     return (
         <div className={cx("wrapper")}>
-            <Title Comp="h2" title="Đăng nhập" />
+            <Title Comp="h2" title="Đăng ký" />
             <Formik
-                initialValues={{ username: "", password: "", remember: "" }}
-                validationSchema={useLoginSchema}
+                initialValues={{
+                    email: "",
+                    username: "",
+                    password: "",
+                    rePassword: "",
+                    policy: "",
+                }}
+                validationSchema={useRegisterSchema}
                 onSubmit={async (values) => {
-                    const loggingIn = await dispatch(
-                        userActions.login(values.username, values.password)
-                    );
-                    let redirect = config.routes.admin;
-                    if (locationState) {
-                        let { redirectTo } = locationState;
-                        redirect = `${redirectTo.pathname}${redirectTo.search}`;
-                    }
-                    if (loggingIn === 1) {
-                        navigate(redirect);
+                    const res = await dispatch(userActions.register(values));
+                    if (res === 1) {
+                        navigate(config.routes.login);
                     }
                 }}
             >
                 {({ values, errors, touched }) => (
                     <Form>
+                        <FormInput
+                            iconLeft={<FontAwesomeIcon icon={faEnvelope} />}
+                            name="email"
+                            placeholder="Email"
+                            errors={errors}
+                            touched={touched}
+                        />
                         <FormInput
                             iconLeft={<FontAwesomeIcon icon={faUser} />}
                             name="username"
@@ -71,17 +74,25 @@ function Login(props) {
                             touched={touched}
                         />
                         <FormInput
+                            iconLeft={<FontAwesomeIcon icon={faLock} />}
+                            name="rePassword"
+                            type="password"
+                            placeholder="Nhập lại mật khẩu"
+                            errors={errors}
+                            touched={touched}
+                        />
+                        <FormInput
                             className="text-left"
-                            name="remember"
+                            name="policy"
                             type="checkbox"
                             values={values}
                             errors={errors}
                             touched={touched}
                             value="1"
                         >
-                            Tự động đăng nhập
+                            Đồng ý với điều khoản và chính sách
                         </FormInput>
-                        <FormSubmit label="Đăng nhập" />
+                        <FormSubmit label="Đăng ký" />
                         <FormikErrorFocus
                             offset={0}
                             align={"top"}
@@ -93,8 +104,8 @@ function Login(props) {
                 )}
             </Formik>
             <div className={cx("register")}>
-                Bạn chưa có tài khoản?{" "}
-                <Link to={config.routes.register}>Đăng ký</Link>
+                Bạn đã có tài khoản?{" "}
+                <Link to={config.routes.login}>Đăng nhập</Link>
             </div>
         </div>
     );

@@ -5,15 +5,17 @@ import styles from "./SimpleCenterLayout.module.scss";
 import config from "~/config";
 import Image from "~/components/Image";
 import images from "~/assets/images";
+import Alert from "~/components/Alert";
 
 const cx = classNames.bind(styles);
 
-function SimpleCenterLayout({ children }) {
+function SimpleCenterLayout({ children, ...props }) {
     return (
         <div id="main">
             <div className={cx("wrapper")}>
                 <div className={cx("container")}>
                     <div className={cx("content")}>
+                        <Alert />
                         <header className={cx("header")}>
                             <Link
                                 className={cx("logo")}

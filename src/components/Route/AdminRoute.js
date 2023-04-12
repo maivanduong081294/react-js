@@ -1,10 +1,14 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import config from "~/config";
-import { isLogin } from "~/hooks";
+import { useUser, useMeta, useAlert } from "~/hooks";
 
 function AdminRoute() {
     const location = useLocation();
-    return isLogin() ? (
+    useAlert.useClear();
+    useMeta.useInitMeta({
+        title: "Admin",
+    });
+    return useUser.isLogin() ? (
         <Outlet />
     ) : (
         <Navigate to={config.routes.login} state={{ redirectTo: location }} />

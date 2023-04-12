@@ -4,16 +4,17 @@
 .wrapper {
     position: relative;
     overflow-x: auto;
+    text-align: center;
 }
 .container {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    min-height: 100vh;
     padding: 24px 12px;
 }
 .content {
-    overflow: hidden;
+    width: 330px;
 }
 .header {
     background: var(--bg-primary);

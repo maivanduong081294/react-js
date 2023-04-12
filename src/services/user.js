@@ -32,15 +32,15 @@ function getById(id) {
     return fetch(`/users/${id}`, requestOptions).then(handleResponse);
 }
 
-function register(user) {
-    const requestOptions = {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(user),
-    };
-
-    return fetch(`/users/register`, requestOptions).then(handleResponse);
-}
+const register = async (data) => {
+    try {
+        const res = await post("users", data);
+        console.log(res);
+        return res;
+    } catch (error) {
+        console.log(error);
+    }
+};
 
 function update(user) {
     const requestOptions = {

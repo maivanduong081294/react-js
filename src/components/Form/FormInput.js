@@ -20,6 +20,7 @@ function FormInput({
     children,
     ...passProps
 }) {
+    let props = { ...passProps };
     let fieldClass = [];
     let checked = [];
     if (errors[name] && touched[name]) {
@@ -32,11 +33,12 @@ function FormInput({
         checked.push(faCircle);
         if (values[name] === value || values[name].includes(value)) {
             checked.push(faCircleCheck);
+            props = { ...props, checked: true };
         }
         iconLeft = <FontAwesomeIcon icon={checked[checked.length - 1]} />;
     }
     return (
-        <div className={cx("wrapper", className, fieldClass.join(" "))}>
+        <div className={cx("wrapper", className, fieldClass)}>
             <label>
                 {label ? <span className={cx("label")}>{label}</span> : ""}
                 <div className={cx("field")}>
@@ -56,7 +58,7 @@ function FormInput({
                         name={name}
                         value={value}
                         type={type}
-                        {...passProps}
+                        {...props}
                     ></Field>
                     {children}
                     {iconRight ? (

@@ -1,6 +1,7 @@
 import { userConstants } from "~/constants";
 import { userService } from "~/services";
 import { alertActions } from "./";
+import { useUser } from "~/hooks";
 
 export const userActions = {
     login,
@@ -10,14 +11,18 @@ export const userActions = {
     delete: _delete,
 };
 
-function login(username, password) {
+function login(username, password, rememberMe = false) {
     return (dispatch) => {
         dispatch(request({ username }));
-
         const fetchAPI = async () => {
             const result = await userService.login(username, password);
             if (result.status === 1) {
                 dispatch(success(result.data));
+                if (rememberMe !== "" && rememberMe.length > 0) {
+                    useUser.setRememberMe(username, password);
+                } else {
+                    useUser.deleteRememberMe();
+                }
             } else {
                 dispatch(failure(result.message));
                 dispatch(alertActions.error(result.message));
@@ -43,20 +48,27 @@ function logout() {
     return { type: userConstants.LOGOUT };
 }
 
-function register(user) {
+function register(data) {
     return (dispatch) => {
-        dispatch(request(user));
+        dispatch(request(data));
 
-        userService.register(user).then(
-            (user) => {
-                dispatch(success());
-                dispatch(alertActions.success("Registration successful"));
-            },
-            (error) => {
-                dispatch(failure(error));
-                dispatch(alertActions.error(error));
+        const fetchAPI = async () => {
+            const { username, password, email } = data;
+            const dataRegister = {
+                username,
+                password,
+                email,
+            };
+            const result = await userService.register(dataRegister);
+            if (result.status === 1) {
+                dispatch(success(result.data));
+            } else {
+                dispatch(failure(result.message));
+                dispatch(alertActions.error(result.message));
             }
-        );
+            return result.status;
+        };
+        return fetchAPI();
     };
 
     function request(user) {

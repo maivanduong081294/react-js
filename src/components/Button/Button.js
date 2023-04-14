@@ -8,7 +8,7 @@ const cx = classNames.bind(styles);
 function Button(
     {
         className,
-        disabled,
+        disabled = false,
         to,
         href,
         rounded,
@@ -89,7 +89,7 @@ function Button(
     }
 
     return (
-        <Tag ref={ref} {...props} className={classes}>
+        <Tag ref={ref} disabled={disabled} {...props} className={classes}>
             {(!icon && iconLeft) ||
                 (imageLeft && <img src={image} alt={children} />)}
             {icon || <span>{children}</span>}

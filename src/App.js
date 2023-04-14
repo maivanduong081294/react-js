@@ -1,16 +1,10 @@
 import { Fragment } from "react";
-import {
-    BrowserRouter as Router,
-    Routes,
-    Route,
-    useLocation,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { adminRoutes, publicRoutes } from "~/routes";
 import { DefaultLayout, AdminLayout } from "~/layouts";
 import { AdminRoute, PublicRoute } from "~/components/Route";
 import Meta from "./components/Meta";
-import { alertActions } from "./actions";
 
 function App() {
     return (

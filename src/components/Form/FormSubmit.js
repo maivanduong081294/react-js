@@ -4,10 +4,12 @@ import Button from "../Button/Button";
 
 const cx = classNames.bind(style);
 
-function FormSubmit({ label }) {
+function FormSubmit({ label, disabled, ...props }) {
     return (
         <div className={cx("wrapper")}>
-            <Button type="submit">{label}</Button>
+            <Button type="submit" disabled={disabled} {...props}>
+                {label}
+            </Button>
         </div>
     );
 }

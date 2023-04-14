@@ -1,9 +1,12 @@
-const crypto = require("crypto-js");
-const AES_TOKEN = process.env.REACT_APP_TOKEN_AES || "AES";
+import { useAES } from "./useHash";
 
 const isLogin = () => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    return user ? true : false;
+    const user = localStorage.getItem("user");
+    if (user) {
+        return useAES.decrypt(user);
+    } else {
+        return user;
+    }
 };
 
 const setRememberMe = (username, password) => {
@@ -11,19 +14,14 @@ const setRememberMe = (username, password) => {
         username,
         password,
     };
-    const _data = crypto.AES.encrypt(
-        JSON.stringify(data),
-        AES_TOKEN
-    ).toString();
+    const _data = useAES.encrypt(data);
     localStorage.setItem("rememberMe", _data);
 };
 
 const getRememberMe = () => {
     const rememberMe = localStorage.getItem("rememberMe");
     if (rememberMe) {
-        const data = JSON.parse(
-            crypto.AES.decrypt(rememberMe, AES_TOKEN).toString(crypto.enc.Utf8)
-        );
+        const data = useAES.decrypt(rememberMe);
         const { username, password } = data;
         return { username, password };
     }
@@ -34,9 +32,14 @@ const deleteRememberMe = () => {
     localStorage.removeItem("rememberMe");
 };
 
+const customPermisionId = () => {
+    return 5;
+};
+
 export const useUser = {
     isLogin,
     setRememberMe,
     getRememberMe,
     deleteRememberMe,
+    customPermisionId,
 };

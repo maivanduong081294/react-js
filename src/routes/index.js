@@ -5,6 +5,8 @@ import Login from "~/pages/Login";
 import Register from "~/pages/Register";
 import AdminDashboard from "~/pages/Admin/Dashboard";
 import NotFound from "~/pages/NotFound";
+import ForgotPassword from "~/pages/ForgotPassword";
+import ResetPassword from "~/pages/ResetPassword";
 
 const publicRoutes = [
     {
@@ -24,6 +26,18 @@ const publicRoutes = [
     {
         path: config.routes.register,
         component: Register,
+        layout: SimpleCenterLayout,
+    },
+
+    {
+        path: config.routes.forgotPassword,
+        component: ForgotPassword,
+        layout: SimpleCenterLayout,
+    },
+
+    {
+        path: config.routes.resetPassword,
+        component: ResetPassword,
         layout: SimpleCenterLayout,
     },
 ];

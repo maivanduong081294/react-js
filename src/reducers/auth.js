@@ -1,7 +1,8 @@
 import { userConstants } from "~/constants";
+import { useAES } from "~/hooks";
 
-let user = JSON.parse(localStorage.getItem("user"));
-const initialState = user ? { loggedIn: true, user } : {};
+let user = localStorage.getItem("user");
+const initialState = user ? { loggedIn: true, user: useAES.decrypt(user) } : {};
 
 export function auth(state = initialState, action) {
     switch (action.type) {

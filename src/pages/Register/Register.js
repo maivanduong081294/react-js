@@ -1,5 +1,5 @@
-import { memo, useEffect, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { memo, useEffect } from "react";
+import { useNavigate, Link, useSearchParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { Form, Formik } from "formik";
 import FormikErrorFocus from "formik-error-focus";
@@ -11,24 +11,35 @@ import styles from "./Register.module.scss";
 
 import { userActions } from "~/actions";
 import config from "~/config";
-import { useUser, useRegisterSchema } from "~/hooks";
+import { useRegisterSchema, useAES } from "~/hooks";
 import { FormInput, FormSubmit } from "~/components/Form";
 import Title from "~/components/Title";
 
 const cx = classNames.bind(styles);
 
 function Login(props) {
-    const [resetLogin, setResetLogin] = useState(0);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
+    const activeAccount = searchParams.get("active");
 
     useEffect(() => {
-        if (useUser.isLogin() && resetLogin === 0) {
-            setResetLogin(1);
-            dispatch(userActions.logout());
-        }
+        const fetchAPI = async () => {
+            if (activeAccount) {
+                const user = useAES.decrypt(activeAccount.replace(/ /g, "+"));
+                const res = await dispatch(userActions.activeAccount(user.id));
+                if (res === 1) {
+                    navigate(config.routes.login, {
+                        state: {
+                            alert: true,
+                        },
+                    });
+                }
+            }
+        };
+        fetchAPI();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [activeAccount]);
 
     return (
         <div className={cx("wrapper")}>
@@ -45,11 +56,15 @@ function Login(props) {
                 onSubmit={async (values) => {
                     const res = await dispatch(userActions.register(values));
                     if (res === 1) {
-                        navigate(config.routes.login);
+                        navigate(config.routes.login, {
+                            state: {
+                                alert: true,
+                            },
+                        });
                     }
                 }}
             >
-                {({ values, errors, touched }) => (
+                {({ values, errors, touched, isSubmitting }) => (
                     <Form>
                         <FormInput
                             iconLeft={<FontAwesomeIcon icon={faEnvelope} />}
@@ -92,7 +107,7 @@ function Login(props) {
                         >
                             Đồng ý với điều khoản và chính sách
                         </FormInput>
-                        <FormSubmit label="Đăng ký" />
+                        <FormSubmit label="Đăng ký" disabled={isSubmitting} />
                         <FormikErrorFocus
                             offset={0}
                             align={"top"}

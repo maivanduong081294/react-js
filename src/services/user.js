@@ -1,10 +1,11 @@
-import { get, post } from "~/utils/httpRequest";
+import { useAES } from "~/hooks";
+import { get, post, _delete, put } from "~/utils/httpRequest";
 
 const login = async (username, password) => {
     try {
         const res = await post("users/authentication", { username, password });
         if (res.status === 1) {
-            localStorage.setItem("user", JSON.stringify(res.data));
+            localStorage.setItem("user", useAES.encrypt(res.data));
         }
         return res;
     } catch (error) {
@@ -24,42 +25,60 @@ function getAll() {
     return fetch(`/users`, requestOptions).then(handleResponse);
 }
 
-function getById(id) {
-    const requestOptions = {
-        method: "GET",
-    };
-
-    return fetch(`/users/${id}`, requestOptions).then(handleResponse);
-}
-
-const register = async (data) => {
+const getDetail = async (id) => {
     try {
-        const res = await post("users", data);
-        console.log(res);
+        const res = await get(`users/${id}`);
+        console.log();
         return res;
     } catch (error) {
         console.log(error);
     }
 };
 
-function update(user) {
-    const requestOptions = {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(user),
-    };
+const forgotPassword = async (email) => {
+    try {
+        const res = await post("users/forgot-password", { email });
+        return res;
+    } catch (error) {
+        console.log(error);
+    }
+};
 
-    return fetch(`/users/${user.id}`, requestOptions).then(handleResponse);
-}
+const register = async (data) => {
+    try {
+        const res = await post("users", data);
+        return res;
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+const updateDetail = async (id, user) => {
+    try {
+        const res = await put(`users/${id}`, user);
+        return res;
+    } catch (error) {
+        console.log(error);
+    }
+};
+const activeAccout = async (id) => {
+    try {
+        const res = await updateDetail(id, { enabled: 1 });
+        return res;
+    } catch (error) {
+        console.log(error);
+    }
+};
 
 // prefixed function name with underscore because delete is a reserved word in javascript
-function _delete(id) {
-    const requestOptions = {
-        method: "DELETE",
-    };
-
-    return fetch(`/users/${id}`, requestOptions).then(handleResponse);
-}
+const remove = async (id) => {
+    try {
+        const res = await _delete("users/" + id);
+        return res;
+    } catch (error) {
+        console.log(error);
+    }
+};
 
 function handleResponse(response) {
     return response.text().then((text) => {
@@ -83,8 +102,10 @@ export const userService = {
     login,
     logout,
     register,
+    forgotPassword,
+    activeAccout,
     getAll,
-    getById,
-    update,
-    delete: _delete,
+    getDetail,
+    updateDetail,
+    delete: remove,
 };

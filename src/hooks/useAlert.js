@@ -5,10 +5,19 @@ import { alertActions } from "~/actions";
 
 const useClear = () => {
     const location = useLocation();
+    const { state } = location;
     const dispatch = useDispatch();
 
     useLayoutEffect(() => {
-        dispatch(alertActions.clear());
+        if (state) {
+            const { alert } = state;
+            if (alert !== true) {
+                dispatch(alertActions.clear());
+            }
+        } else {
+            dispatch(alertActions.clear());
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location]);
 };
 

@@ -51,17 +51,19 @@ function Login(props) {
                             values.remember
                         )
                     );
-                    let redirect = config.routes.admin;
+                    let redirect = config.routes.home;
                     if (locationState) {
                         let { redirectTo } = locationState;
-                        redirect = `${redirectTo.pathname}${redirectTo.search}`;
+                        if (redirectTo) {
+                            redirect = `${redirectTo.pathname}${redirectTo.search}`;
+                        }
                     }
                     if (loggingIn === 1) {
-                        navigate(redirect);
+                        navigate(redirect, { state: { logged: true } });
                     }
                 }}
             >
-                {({ values, errors, touched }) => (
+                {({ values, errors, touched, isSubmitting }) => (
                     <Form>
                         <FormInput
                             iconLeft={<FontAwesomeIcon icon={faUser} />}
@@ -96,7 +98,7 @@ function Login(props) {
                                 Quên mật khẩu?
                             </Link>
                         </div>
-                        <FormSubmit label="Đăng nhập" />
+                        <FormSubmit label="Đăng nhập" disabled={isSubmitting} />
                         <FormikErrorFocus
                             offset={0}
                             align={"top"}

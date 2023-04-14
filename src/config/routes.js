@@ -10,6 +10,8 @@ const routes = {
     login: "/dang-nhap",
     register: "/dang-ky",
     forgotPassword: "/quen-mat-khau",
+    resetPassword: "/dat-lai-mat-khau",
+    activeAccount: "/kich-hoat-tai-khoan",
     admin: adminUrl,
 };
 

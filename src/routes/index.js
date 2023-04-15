@@ -1,5 +1,4 @@
 import config from "~/config";
-import { NoSidebarLayout, SimpleCenterLayout } from "~/layouts";
 import Homepage from "~/pages/Home";
 import Login from "~/pages/Login";
 import Register from "~/pages/Register";
@@ -12,33 +11,32 @@ const publicRoutes = [
     {
         path: "*",
         component: NotFound,
-        layout: NoSidebarLayout,
+        layout: null,
     },
     {
         path: config.routes.home,
         component: Homepage,
     },
+];
+
+const authenticationRoutes = [
     {
         path: config.routes.login,
         component: Login,
-        layout: SimpleCenterLayout,
     },
     {
         path: config.routes.register,
         component: Register,
-        layout: SimpleCenterLayout,
     },
 
     {
         path: config.routes.forgotPassword,
         component: ForgotPassword,
-        layout: SimpleCenterLayout,
     },
 
     {
         path: config.routes.resetPassword,
         component: ResetPassword,
-        layout: SimpleCenterLayout,
     },
 ];
 
@@ -49,11 +47,6 @@ const adminRoutes = [
         path: config.routes.admin,
         component: AdminDashboard,
     },
-    {
-        path: `${config.routes.admin}/*`,
-        component: NotFound,
-        layout: NoSidebarLayout,
-    },
 ];
 
-export { publicRoutes, privateRoutes, adminRoutes };
+export { publicRoutes, authenticationRoutes, privateRoutes, adminRoutes };

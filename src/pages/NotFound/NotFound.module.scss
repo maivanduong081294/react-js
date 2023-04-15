@@ -1,0 +1,28 @@
+.wrapper {
+    overflow: auto;
+}
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 24px 12px;
+}
+.main {
+    max-width: 750px;
+    text-align: center;
+}
+.image {
+    width: 150px;
+}
+.title {
+    font-size: 285px;
+    font-weight: 700;
+    line-height: 1.4;
+    color: var(--link-color-primary);
+}
+.description {
+    font-size: 18px;
+    line-height: 35px;
+    margin-bottom: 20px;
+}

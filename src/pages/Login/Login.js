@@ -44,7 +44,7 @@ function Login(props) {
                 }}
                 validationSchema={useLoginSchema}
                 onSubmit={async (values) => {
-                    const loggingIn = await dispatch(
+                    const result = await dispatch(
                         userActions.login(
                             values.username,
                             values.password,
@@ -52,13 +52,20 @@ function Login(props) {
                         )
                     );
                     let redirect = config.routes.home;
+                    if (
+                        result.status === 1 &&
+                        result.data.permission_id !==
+                            useUser.customPermisionId()
+                    ) {
+                        redirect = config.routes.admin;
+                    }
                     if (locationState) {
                         let { redirectTo } = locationState;
                         if (redirectTo) {
                             redirect = `${redirectTo.pathname}${redirectTo.search}`;
                         }
                     }
-                    if (loggingIn === 1) {
+                    if (result.status === 1) {
                         navigate(redirect, { state: { logged: true } });
                     }
                 }}

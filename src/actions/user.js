@@ -38,7 +38,7 @@ function login(username, password, rememberMe = false) {
                 dispatch(failure(result.message));
                 dispatch(alertActions.error("Đăng nhập thất bại"));
             }
-            return result.status;
+            return result;
         };
         return fetchAPI(username, password);
     };

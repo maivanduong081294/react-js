@@ -36,12 +36,8 @@
     color: var(--button-bg-color);
     background-color: var(--button-color);
     &:hover {
-        background: linear-gradient(
-                0deg,
-                rgba(0, 0, 0, 0.06),
-                rgba(0, 0, 0, 0.06)
-            ),
-            #fe2c55;
+        background: var(--button-bg-color);
+        color: var(--button-color);
     }
 }
 .small {
@@ -163,4 +159,7 @@
     &.separator {
         border-top: 1px solid rgba(255, 255, 255, 0.12);
     }
+}
+.uppercase {
+    text-transform: uppercase;
 }

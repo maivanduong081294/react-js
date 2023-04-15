@@ -30,6 +30,7 @@ function Button(
         wAuto,
         bold,
         separator,
+        uppercase,
         ...passProps
     },
     ref
@@ -51,6 +52,7 @@ function Button(
             icon,
             wAuto,
             separator,
+            uppercase,
         },
         className
     );

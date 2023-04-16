@@ -11,14 +11,20 @@ function AdminRoute() {
     const dispatch = useDispatch();
     const [permission, setPermission] = useState(true);
     const [navigateTo, setNavigateTo] = useState(config.routes.login);
+    const auth = useUser.isLogin();
     useAlert.useClear();
     useMeta.useInitMeta({
         title: "Admin",
     });
     useLayoutEffect(() => {
-        const auth = useUser.isLogin();
         if (!auth || auth.permission_id === useUser.customPermisionId()) {
-            dispatch(alertActions.error("Đăng nhập thất bại"));
+            if (!auth) {
+                dispatch(alertActions.warning("Vui lòng đăng nhập"));
+            } else {
+                dispatch(
+                    alertActions.error("Tài khoản không có quyền truy cập")
+                );
+            }
             setPermission(false);
             if (locationState && locationState.logged) {
                 setNavigateTo(config.routes.home);
@@ -26,7 +32,7 @@ function AdminRoute() {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [permission]);
-    return permission ? (
+    return auth && permission ? (
         <Outlet />
     ) : (
         <Navigate

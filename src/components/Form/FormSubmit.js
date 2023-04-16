@@ -7,7 +7,7 @@ const cx = classNames.bind(style);
 function FormSubmit({ label, disabled, ...props }) {
     return (
         <div className={cx("wrapper")}>
-            <Button type="submit" disabled={disabled} {...props}>
+            <Button type="submit" primary disabled={disabled} {...props}>
                 {label}
             </Button>
         </div>

@@ -47,6 +47,10 @@ const adminRoutes = [
         path: config.routes.admin,
         component: AdminDashboard,
     },
+    {
+        path: config.routes.adminNotifications,
+        component: AdminDashboard,
+    },
 ];
 
 export { publicRoutes, authenticationRoutes, privateRoutes, adminRoutes };

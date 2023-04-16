@@ -1,0 +1,78 @@
+.header {
+    border-bottom: 1px solid #f6f7fb;
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    span {
+        background: var(--button-bg-color);
+        color: var(--button-color);
+        overflow: hidden;
+        border-radius: 100%;
+        width: 20px;
+        line-height: 20px;
+        text-align: center;
+        font-weight: bold;
+        white-space: nowrap;
+        font-size: 12px;
+    }
+}
+.list {
+    margin: 0;
+    list-style: none;
+}
+.item {
+    border-bottom: 1px solid #f6f7fb;
+    padding: 10px 15px;
+    display: flex;
+    cursor: pointer;
+}
+.actived {
+    background: #f6f6f6;
+}
+.icon {
+    width: 20px;
+    font-size: 18px;
+    text-align: center;
+    margin-right: 10px;
+}
+.title {
+    font-weight: bold;
+}
+.description {
+    margin-top: 5px;
+}
+.content {
+    flex: 1 1 auto;
+}
+.check {
+    margin-left: 10px;
+    color: var(--link-color-primary);
+    font-size: 11px;
+    align-self: center;
+}
+
+.item-order {
+    .icon,
+    .title {
+        color: #4466f2;
+    }
+}
+.item-review {
+    .icon,
+    .title {
+        color: #f1c40f;
+    }
+}
+.item-comment {
+    .icon,
+    .title {
+        color: #ff5370;
+    }
+}
+.item-contact {
+    .icon,
+    .title {
+        color: #22af47;
+    }
+}

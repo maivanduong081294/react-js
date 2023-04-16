@@ -13,6 +13,9 @@ const routes = {
     resetPassword: "/dat-lai-mat-khau",
     activeAccount: "/kich-hoat-tai-khoan",
     admin: adminUrl,
+    adminNotifications: `${adminUrl}/thong-bao`,
+    adminContacts: `${adminUrl}/lien-he`,
+    adminProfile: `${adminUrl}/chinh-sua-thong-tin`,
 };
 
 export default routes;

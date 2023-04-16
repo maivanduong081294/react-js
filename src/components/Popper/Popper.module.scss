@@ -1,0 +1,25 @@
+.popup-wrapper {
+    width: 100%;
+    background: var(--body-bg);
+    color: var(--body-color);
+    box-shadow: rgb(0 0 0 / 12%) 0px 2px 12px;
+    max-height: min((100vh - 50px) - 60px, 734px);
+    min-width: 220px;
+    overflow: hidden auto;
+}
+.popup-arrow {
+    bottom: 100%;
+    &::before {
+        content: "";
+        border-left: 7px solid transparent;
+        border-right: 7px solid transparent;
+        border-bottom: 7px solid #fff;
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+#auth {
+    min-width: 180px;
+}

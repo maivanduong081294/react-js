@@ -94,7 +94,7 @@ function Button(
         <Tag ref={ref} disabled={disabled} {...props} className={classes}>
             {(!icon && iconLeft) ||
                 (imageLeft && <img src={image} alt={children} />)}
-            {icon || <span>{children}</span>}
+            {icon} {children}
             {(!icon && iconRight) ||
                 (imageRight && <img src={image} alt={children} />)}
         </Tag>
